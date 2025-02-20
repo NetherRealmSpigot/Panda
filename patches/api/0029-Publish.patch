@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 14:36:34 +0800
+Subject: [PATCH] Publish
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index ec8fa12ca39fa759c575aff36be83ecfdf3d086b..10936bab0a639d5b6562e1ceffab6089fd8e283e 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -1,3 +1,5 @@
++import java.net.URI
++
+ plugins {
+     id("pandaspigot.conventions")
+     `maven-publish`
+@@ -73,49 +75,22 @@ publishing {
+                     fromResolutionOf("runtimeClasspath")
+                 }
+             }
+-
+-            pom {
+-                url.set("https://github.com/hpfxd/PandaSpigot")
+-                description.set(project.description)
+-                name.set(project.name)
+-                // if this is a CI build, set version as the run id
+-                System.getenv("GITHUB_RUN_NUMBER").let { if (it != null) version = it }
+-
+-                developers {
+-                    developer {
+-                        id.set("hpfxd")
+-                        name.set("Nate")
+-                        email.set("me@hpfxd.com")
+-                    }
+-                }
+-
+-                scm {
+-                    connection.set("scm:git:git://github.com/hpfxd/PandaSpigot.git")
+-                    developerConnection.set("scm:git:git://github.com/hpfxd/PandaSpigot.git")
+-                    url.set("https://github.com/hpfxd/PandaSpigot")
+-                }
+-
+-                licenses {
+-                    license {
+-                        name.set("GPL-v3.0")
+-                        url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
+-                    }
+-                }
+-            }
+         }
+     }
+ 
+-    (System.getenv("REPO_USERNAME") ?: findProperty("repository.hpfxd.username")).let { repoUsername ->
+-        if (repoUsername == null) return@let // don't declare repository if username not declared
++    (System.getenv("CUSTOMSPIGOT_MAVEN_URL")).let { urlString ->
++        if (urlString == null) {
++            return@let
++        }
+ 
+         repositories {
+             maven {
+-                name = "hpfxd-repo"
+-                url = uri("https://repo.hpfxd.com/releases/")
++                name = "CustomSpigot"
++                url = URI.create(urlString)
+ 
+                 credentials {
+-                    username = repoUsername as String
+-                    password = System.getenv("REPO_PASSWORD") ?: findProperty("repository.hpfxd.password") as String
++                    username = System.getenv("CUSTOMSPIGOT_MAVEN_USERNAME")
++                    password = System.getenv("CUSTOMSPIGOT_MAVEN_PASSWORD")
+                 }
+             }
+         }
