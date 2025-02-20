@@ -1,47 +1,73 @@
 name: Build
 
 on:
-  push:
+  pull_request:
+    paths:
+      - "patches/api/*.patch"
+      - "patches/server/*.patch"
     branches:
-      - master
+      - "master"
+  push:
+    paths:
+      - "patches/api/*.patch"
+      - "patches/server/*.patch"
+    branches:
+      - "master"
+  workflow_dispatch:
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup JDK 8
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: 8
-          distribution: temurin
-
-      - name: Set Git identity
+          java-version: "17"
+          distribution: "temurin"
+          cache: "gradle"
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Setup PandaSpigot
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           git config --global init.defaultBranch master
-
-      - name: Setup build environment
-        run: ./panda setup
-
-      - name: Apply patches
-        run: ./panda patch
-
+          ./panda setup
+          ./panda patch
       - name: Build
-        uses: burrunan/gradle-cache-action@v2
-        with:
-          arguments: build paperclipJar
-          read-only: false
-
-      - name: Copy Paperclip jar
+        run: ./gradlew build
+      - name: Copy artifacts
         run: |
-          cp -v "./paperclip/build/libs/paperclip-1.8.8-R0.1-SNAPSHOT.jar" "./pandaspigot-$GITHUB_RUN_NUMBER.jar"
-
+          mkdir -p out
+          mkdir -p out/server
+          mkdir -p out/api
+          cp PandaSpigot-Server/build/libs/pandaspigot-*-SNAPSHOT.jar out/server
+          cp PandaSpigot-API/build/libs/pandaspigot-*-SNAPSHOT.jar out/api
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Server JAR
-          path: pandaspigot-${{ github.run_number }}.jar
-          if-no-files-found: error
+          name: Panda-${{ github.run_id }}
+          path: out/*
+          retention-days: 1
+          overwrite: true
+      - name: Publish server jar
+        if: ${{ (github.ref_name == 'master' && github.event_name == 'push') || github.event_name == 'workflow_dispatch' }}
+        env:
+          CUSTOMSPIGOT_MAVEN_URL: ${{ secrets.PANDASPIGOT_MAVEN }}
+          CUSTOMSPIGOT_MAVEN_USERNAME: ${{ secrets.PANDASPIGOT_MAVEN_USERNAME }}
+          CUSTOMSPIGOT_MAVEN_PASSWORD: ${{ secrets.PANDASPIGOT_MAVEN_PASSWORD }}
+        run: ./gradlew :pandaspigot-server:publishAllPublicationsToCustomSpigotRepository
+        continue-on-error: true
+      - name: Publish API jar
+        if: ${{ (github.ref_name == 'master' && github.event_name == 'push') || github.event_name == 'workflow_dispatch' }}
+        env:
+          CUSTOMSPIGOT_MAVEN_URL: ${{ secrets.PANDASPIGOT_MAVEN }}
+          CUSTOMSPIGOT_MAVEN_USERNAME: ${{ secrets.PANDASPIGOT_MAVEN_USERNAME }}
+          CUSTOMSPIGOT_MAVEN_PASSWORD: ${{ secrets.PANDASPIGOT_MAVEN_PASSWORD }}
+        run: ./gradlew :pandaspigot-api:publishAllPublicationsToCustomSpigotRepository
+        continue-on-error: true
