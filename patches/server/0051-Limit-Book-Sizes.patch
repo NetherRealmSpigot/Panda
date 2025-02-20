@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Aikar <aikar@aikar.co>
-Date: Sat, 17 Nov 2018 00:08:54 -0500
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:38:31 +0800
 Subject: [PATCH] Limit Book Sizes
 
 
@@ -18,10 +18,10 @@ index 99367c42858cf97190a3b090f258b18e4aea3ac2..7db0c0097bcb38e4e49ab12879c23077
 +    public double maxBookTotalSizeMultiplier = 0.98d;
  }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 5842cedc81b90b4f3565d71ba5dfa8c0c98dfca6..89d251abc16d7a98a5e6d5a5b3298b3a577c9442 100644
+index ea7c62ba0fec3a61ee5fbeaf3f8918672595ae0b..f75146d2ad3f4d7982cad19a2481aefdcd709c1e 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1991,6 +1991,45 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -2022,6 +2022,45 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
          this.player.a(packetplayinsettings);
      }
  
@@ -67,7 +67,7 @@ index 5842cedc81b90b4f3565d71ba5dfa8c0c98dfca6..89d251abc16d7a98a5e6d5a5b3298b3a
      public void a(PacketPlayInCustomPayload packetplayincustompayload) {
          PlayerConnectionUtils.ensureMainThread(packetplayincustompayload, this, this.player.u());
          PacketDataSerializer packetdataserializer;
-@@ -2014,6 +2053,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -2045,6 +2084,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                  itemstack1 = this.player.inventory.getItemInHand();
                  if (itemstack1 != null) {
                      if (itemstack.getItem() == Items.WRITABLE_BOOK && itemstack.getItem() == itemstack1.getItem()) {
@@ -75,10 +75,10 @@ index 5842cedc81b90b4f3565d71ba5dfa8c0c98dfca6..89d251abc16d7a98a5e6d5a5b3298b3a
                          itemstack1 = new ItemStack(Items.WRITABLE_BOOK); // CraftBukkit
                          itemstack1.a("pages", (NBTBase) itemstack.getTag().getList("pages", 8));
                          CraftEventFactory.handleEditBookEvent(player, itemstack1); // CraftBukkit
-@@ -2046,6 +2086,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -2077,6 +2117,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                  itemstack1 = this.player.inventory.getItemInHand();
                  if (itemstack1 != null) {
-                     if (itemstack.getItem() == Items.WRITTEN_BOOK && itemstack1.getItem() == Items.WRITABLE_BOOK) {
+                     if (itemstack.getItem() == (networkManager.getVersion() == 47 ? Items.WRITTEN_BOOK : Items.WRITABLE_BOOK) && itemstack1.getItem() == Items.WRITABLE_BOOK) {
 +                        if (!validateBook(itemstack)) return; // PandaSpigot
                          // CraftBukkit start
                          itemstack1 = new ItemStack(Items.WRITTEN_BOOK);

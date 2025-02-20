@@ -5,10 +5,10 @@ Subject: [PATCH] Cache block break animation packet
 
 
 diff --git a/src/main/java/net/minecraft/server/WorldManager.java b/src/main/java/net/minecraft/server/WorldManager.java
-index 55a2112d2ce3a5ccd4868888c4a529605ef54c34..923887bd010fa1fe1958a50ae39196bfa7f07bcd 100644
+index 5c06ca24ba4c6fea74bd73b5e43b598f78b35139..7b4ca05df836d44f88e3569023d04732509efc96 100644
 --- a/src/main/java/net/minecraft/server/WorldManager.java
 +++ b/src/main/java/net/minecraft/server/WorldManager.java
-@@ -61,6 +61,7 @@ public class WorldManager implements IWorldAccess {
+@@ -66,6 +66,7 @@ public class WorldManager implements IWorldAccess {
          if (entity instanceof EntityHuman) entityhuman = (EntityHuman) entity;
          // CraftBukkit end
  
@@ -16,7 +16,7 @@ index 55a2112d2ce3a5ccd4868888c4a529605ef54c34..923887bd010fa1fe1958a50ae39196bf
          while (iterator.hasNext()) {
              EntityPlayer entityplayer = (EntityPlayer) iterator.next();
  
-@@ -76,7 +77,10 @@ public class WorldManager implements IWorldAccess {
+@@ -81,7 +82,10 @@ public class WorldManager implements IWorldAccess {
                  // CraftBukkit end
  
                  if (d0 * d0 + d1 * d1 + d2 * d2 < 1024.0D) {

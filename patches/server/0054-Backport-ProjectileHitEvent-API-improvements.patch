@@ -8,10 +8,10 @@ Subject: [PATCH] Backport ProjectileHitEvent API improvements
 - Added getHitEntity
 
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 8c9b5c034d32349317bbeb8807f7e4a4c63229ae..d00c13962674f6c1031c16c5f01004b897d6cf13 100644
+index 9b859837f111365398a2ec4a4eaf8667f69f47fa..a1c7824df9e5bf2acda1577c765db60543480fcc 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -231,7 +231,7 @@ public class EntityArrow extends Entity implements IProjectile {
+@@ -232,7 +232,7 @@ public class EntityArrow extends Entity implements IProjectile {
              // PaperSpigot end
  
              if (movingobjectposition != null) {

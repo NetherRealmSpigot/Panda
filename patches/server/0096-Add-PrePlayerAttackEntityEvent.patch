@@ -5,10 +5,10 @@ Subject: [PATCH] Add PrePlayerAttackEntityEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 86ab9994079c6e18e3aed885db4171d0d87b4c1a..e071460f1d024758e05e8344f8f7f6d269915875 100644
+index 11e05ea9e44e1f0411ec55553236038d755f9aad..05dce2a2c6d7e0a6d3ad86be5d12ec74f34d2bd4 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -955,8 +955,16 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -963,8 +963,16 @@ public abstract class EntityHuman extends EntityLiving {
      }
  
      public void attack(Entity entity) {

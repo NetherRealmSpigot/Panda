@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: hpfxd <me@hpfxd.com>
-Date: Fri, 29 Oct 2021 06:38:18 -0400
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:24:07 +0800
 Subject: [PATCH] Optimize Network Manager and add advanced packet support
 
 Adds ability for 1 packet to bundle other packets to follow it
@@ -26,7 +26,7 @@ Also avoids spamming closed channel exception by rechecking closed state in disp
 and then catch exceptions and close if they fire.
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603efd33877 100644
+index 578ee6d7262adf199c0751a9a022d1a64b65ee45..eecca1887d1bbec134b1512e12b138455f831d17 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -62,7 +62,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
@@ -47,10 +47,10 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
 +    public boolean queueImmunity = false;
 +    public EnumProtocol protocol;
 +    // PandaSpigot end
+     public static final AttributeKey<Integer> protocolVersion = AttributeKey.valueOf("protocol_version");
  
      public NetworkManager(EnumProtocolDirection enumprotocoldirection) {
-         this.h = enumprotocoldirection;
-@@ -97,6 +102,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -107,6 +112,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
      }
  
      public void a(EnumProtocol enumprotocol) {
@@ -58,7 +58,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
          this.channel.attr(NetworkManager.c).set(enumprotocol);
          this.channel.config().setAutoRead(true);
          NetworkManager.g.debug("Enabled auto read");
-@@ -136,38 +142,87 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -146,38 +152,87 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
          this.m = packetlistener;
      }
  
@@ -164,7 +164,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
      private void a(final Packet packet, final GenericFutureListener<? extends Future<? super Void>>[] agenericfuturelistener) {
          final EnumProtocol enumprotocol = EnumProtocol.a(packet);
          final EnumProtocol enumprotocol1 = (EnumProtocol) this.channel.attr(NetworkManager.c).get();
-@@ -177,18 +232,38 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -187,18 +242,38 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
              this.channel.config().setAutoRead(false);
          }
  
@@ -203,7 +203,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
          } else {
              this.channel.eventLoop().execute(new Runnable() {
                  public void run() {
-@@ -196,35 +271,77 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -206,35 +281,77 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
                          NetworkManager.this.a(enumprotocol);
                      }
  
@@ -293,7 +293,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
  
      public void a() {
          this.m();
-@@ -239,9 +356,21 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -249,9 +366,21 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
          return this.l;
      }
  
@@ -315,7 +315,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
          // Spigot End
          if (this.channel.isOpen()) {
              this.channel.close(); // We can't wait as this may be called from an event loop.
-@@ -260,6 +389,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -270,6 +399,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
          this.channel.pipeline().addBefore("prepender", "encrypt", new PacketEncrypter(MinecraftEncryption.a(1, secretkey)));
      }
  
@@ -323,7 +323,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
      public boolean g() {
          return this.channel != null && this.channel.isOpen();
      }
-@@ -314,9 +444,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -324,9 +454,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
                  } else if (this.getPacketListener() != null) {
                      this.getPacketListener().a(new ChatComponentText("Disconnected"));
                  }
@@ -335,7 +335,7 @@ index 9ece4582635db8d9547302421b44f67e262fd0f7..7d5a3c4b6d9958efde5f918963631603
              }
  
          }
-@@ -328,8 +458,8 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -338,8 +468,8 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
  
      static class QueuedPacket {
  

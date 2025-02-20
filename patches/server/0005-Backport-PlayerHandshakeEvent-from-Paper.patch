@@ -6,10 +6,10 @@ Subject: [PATCH] Backport PlayerHandshakeEvent from Paper
 This patch was added in Paper 1.9.4, and is used by plugins such as BungeeGuard to listen to and modify handshake packets without requiring a packet listener such as ProtocolLib.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 215648ece51b9e0316bae17de60abccfd40f8b35..e1a86a75524c3e3f3a9a4fbd447e01c7cb4d2b78 100644
+index d51d2dc396c09076a7df417b35c0bef318de97cb..3d6a921bb565d7b3f502fd3499e59bffa4461470 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
-@@ -72,8 +72,35 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -80,8 +80,35 @@ public class HandshakeListener implements PacketHandshakingInListener {
                  this.b.close(chatcomponenttext);
              } else {
                  this.b.a((PacketListener) (new LoginListener(this.a, this.b)));

@@ -20,10 +20,10 @@ it only impacts data sent to and from client to extend mojangs limit.
 Set -DPanda.maxSignLength=XX to change limit or -1 to disable
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f5ef763b8783a6a275b5d4311d368bed25e3b878..e21ce6f8434a7eba8d1137f46e35493b4863736d 100644
+index 08cf5613fca72a9004661f07aa11e05ad8372b99..bed446fe7da63ee77e92a6cb6fa729f979f67f5e 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1922,7 +1922,16 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -1953,7 +1953,16 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
              String[] lines = new String[4];
  
              for (int i = 0; i < aichatbasecomponent.length; ++i) {

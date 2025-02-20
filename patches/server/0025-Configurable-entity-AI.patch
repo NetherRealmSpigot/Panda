@@ -21,10 +21,10 @@ index fb9db2dafcf180dbb25c768936cb59a58a7a3584..04f04ce721aa06fba935618176c77587
      public KnockbackConfig knockback;
      
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index b82b98473f516e5963fed51ba892bfa59a80c2f5..c1f100c3bd68329b77f9a899cc7353374064daf6 100644
+index e704b4fe838c24a7ae2545c095f428be3213a5ae..cd3079bae2604ed8d03ce0e3bcc582f354248940 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -459,7 +459,7 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -489,7 +489,7 @@ public abstract class EntityInsentient extends EntityLiving {
          this.D();
          this.world.methodProfiler.b();
          // Spigot Start

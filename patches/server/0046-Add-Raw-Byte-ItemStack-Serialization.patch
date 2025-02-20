@@ -25,10 +25,10 @@ index b2d52540dbaf61b1f3bccd1b3e71435cb6d9a4ee..be5e84305be13de53977aff73800d2de
          DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(outputstream)));
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-index 23f05f4db84237a3f6477fd26e7fd731b742aeca..95277e3758afff4c4a9205a1ace631401e81401b 100644
+index fdaf0263a382f428b4d62f1519ff7bde58e8733a..f4346e85049e63ea0d02f2152c61974238df9d40 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-@@ -90,7 +90,7 @@ public final class CraftItemStack extends ItemStack {
+@@ -90,7 +90,7 @@ public class CraftItemStack extends ItemStack {
          return new CraftItemStack(CraftMagicNumbers.getMaterial(item), amount, (short) 0, null);
      }
  

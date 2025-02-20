@@ -8,10 +8,10 @@ the updates per world, so that we can re-use the same packet
 object for every player unless they have per-player time enabled.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9ae7d40f9d558d501fc754996f2122d7b9edcdae..864f078f7242bf7b0571c61f0e023c8de02ff771 100644
+index ba305750a07fb16872c68fb4680fcfbbbf5adf6e..c875cb016dec8dd6a61d1158773031c3b37a85ae 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -882,12 +882,24 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
+@@ -881,12 +881,24 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
  
          SpigotTimings.timeUpdateTimer.startTiming(); // Spigot
          // Send time updates to everyone, it will get the right time from the world the player is in.

@@ -29,10 +29,10 @@ index 9afaf630481a9533fb014f306d4d90b8de80a129..3dd3d0702c17541083d0d365ca46e936
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 0ad4edb8390f396d935d321caf67af0f209d5420..04916c6a8ee6446e786eb23c54ae78e8d2cba84d 100644
+index 48cff381a5e6fb6e1df22819389b9f4836f9c0c0..e74ec00de030cd3b02492442a0232e8d41b95f87 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1003,7 +1003,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1011,7 +1011,13 @@ public abstract class EntityHuman extends EntityLiving {
  
                      if (flag2) {
                          if (i > 0) {
@@ -48,10 +48,10 @@ index 0ad4edb8390f396d935d321caf67af0f209d5420..04916c6a8ee6446e786eb23c54ae78e8
                              this.motZ *= 0.6D;
                              this.setSprinting(false);
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index c8b4e292849486eadfb437110466d6eafe275411..72c7e6fc8bb0a71877d6759af44d39030bcf51f5 100644
+index c6f5a5f721bed704ef435c482c350e4235e36591..7d4b647c6f9d798ea616efc9e46657ed587d4229 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -897,18 +897,23 @@ public abstract class EntityLiving extends Entity {
+@@ -914,18 +914,23 @@ public abstract class EntityLiving extends Entity {
      public void a(Entity entity, float f, double d0, double d1) {
          if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
              this.ai = true;

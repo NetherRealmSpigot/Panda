@@ -5,10 +5,10 @@ Subject: [PATCH] Fix AIOOBE in inventory handling
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 977675f6155a1ccb1d9cdfdcb48a9f922805df9a..1f80521c97fd7b0ef263b9e17cb79bcc51db0433 100644
+index d812ae47c7e3b2bfb2c5af4ef30b5d4a015fff3b..83bbd7cfdd4125bbf509283fd4840a9c8bd077e1 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1600,7 +1600,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -1631,7 +1631,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                  } else if (packetplayinwindowclick.f() == 3) {
                      if (packetplayinwindowclick.c() == 2) {
                          click = ClickType.MIDDLE;

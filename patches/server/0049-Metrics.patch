@@ -855,10 +855,10 @@ index 0000000000000000000000000000000000000000..9134394542f49f7c400a4a07b6490488
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index b8cf32d60190b4c8149aede85cf2c0565281a3fe..f83ca62f55241107d76319e43b2706f42a94185a 100644
+index 8610bc2e30390502ac2c588b7df60c3ee11c7197..04d37a67b042c5e6c13896c72515b52a6d26ffc9 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -182,6 +182,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -183,6 +183,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.a((PlayerList) (new DedicatedPlayerList(this)));
              org.spigotmc.SpigotConfig.init((File) options.valueOf("spigot-settings"));
              org.spigotmc.SpigotConfig.registerCommands();

@@ -91,10 +91,10 @@ index 45d385d31296eda75aa30500118c21406df5fe43..e953d6d80ef020f8e4540eae6881709f
          }
  
 diff --git a/src/main/java/net/minecraft/server/EntityEnderman.java b/src/main/java/net/minecraft/server/EntityEnderman.java
-index f3afbbd3a20ebf7d51a8fac418cff3e6f59ab56f..6d5fec85c8a79df2ea299c31196bab58f722fa9e 100644
+index 1a9ec28207f0a5277246afbf6fb5da4f6c9fb45c..be081ecae4ddf9b4faf5e4bf1fd2d7df0b21ef37 100644
 --- a/src/main/java/net/minecraft/server/EntityEnderman.java
 +++ b/src/main/java/net/minecraft/server/EntityEnderman.java
-@@ -352,7 +352,10 @@ public class EntityEnderman extends EntityMonster {
+@@ -359,7 +359,10 @@ public class EntityEnderman extends EntityMonster {
              int j = MathHelper.floor(this.enderman.locY + random.nextDouble() * 3.0D);
              int k = MathHelper.floor(this.enderman.locZ - 2.0D + random.nextDouble() * 4.0D);
              BlockPosition blockposition = new BlockPosition(i, j, k);
@@ -106,7 +106,7 @@ index f3afbbd3a20ebf7d51a8fac418cff3e6f59ab56f..6d5fec85c8a79df2ea299c31196bab58
              Block block = iblockdata.getBlock();
  
              if (EntityEnderman.c.contains(block)) {
-@@ -386,10 +389,13 @@ public class EntityEnderman extends EntityMonster {
+@@ -393,10 +396,13 @@ public class EntityEnderman extends EntityMonster {
              int j = MathHelper.floor(this.a.locY + random.nextDouble() * 2.0D);
              int k = MathHelper.floor(this.a.locZ - 1.0D + random.nextDouble() * 2.0D);
              BlockPosition blockposition = new BlockPosition(i, j, k);
@@ -192,7 +192,7 @@ index e67aa0423f6a28b286174662f29ffc32a74992d9..22c3ac7a71043ab82e7d3c95c71e02fa
      }
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index a429dc5e950a31557d444d0a50ed71d13f13d555..46ebdb5e22592658cbd8172390b52edac5344e0f 100644
+index 0200b38c95883badd8e764237b11e44d4d7c2e98..af238a18f2ef015018f7349c736b8f7014b68c81 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -874,7 +874,10 @@ public abstract class World implements IBlockAccess {
@@ -219,7 +219,7 @@ index a429dc5e950a31557d444d0a50ed71d13f13d555..46ebdb5e22592658cbd8172390b52eda
                      Block block1 = iblockdata1.getBlock();
  
                      if (!flag1 || block1.a(this, blockposition, iblockdata1) != null) {
-@@ -2712,8 +2718,11 @@ public abstract class World implements IBlockAccess {
+@@ -2723,8 +2729,11 @@ public abstract class World implements IBlockAccess {
  
          for (int i1 = i; i1 <= j; ++i1) {
              for (int j1 = k; j1 <= l; ++j1) {

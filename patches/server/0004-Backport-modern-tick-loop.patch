@@ -214,7 +214,7 @@ index 0000000000000000000000000000000000000000..c6dd7e4933ef93cb887ccf937af34d07
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..6434b8613971a228fb0074390d8223bfcefe4e9f 100644
+index d03e165569dd13c28cdd55263f7c182e94a96303..e05f4d1ab4aceaaf298b5cfb22d073c961842db7 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -39,8 +39,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -231,7 +231,7 @@ index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..6434b8613971a228fb0074390d8223bf
          Thread thread = new Thread("Server Infinisleeper") {
              {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7d19ec833d61c2f75b5eb75d7eb291c7366a1a9a..7631ed0c338e5634bbe7ffa3f8e409e5dd5820eb 100644
+index 145513169dc5b4a7b22f1ce8014e4465c0b3aa7b..2396f345f6d957a8b316e06548977a6cbe44c67b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -48,7 +48,7 @@ import org.bukkit.craftbukkit.Main;
@@ -453,7 +453,7 @@ index 7d19ec833d61c2f75b5eb75d7eb291c7366a1a9a..7631ed0c338e5634bbe7ffa3f8e409e5
          this.methodProfiler.a("tallying");
          this.h[this.ticks % 100] = System.nanoTime() - i;
          this.methodProfiler.b();
-@@ -981,6 +1067,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -980,6 +1066,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              });
              */
  
@@ -461,7 +461,7 @@ index 7d19ec833d61c2f75b5eb75d7eb291c7366a1a9a..7631ed0c338e5634bbe7ffa3f8e409e5
              DedicatedServer dedicatedserver = new DedicatedServer(options);
  
              if (options.has("port")) {
-@@ -1000,6 +1087,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -999,6 +1086,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
              dedicatedserver.primaryThread.start();
              // CraftBukkit end
@@ -469,7 +469,7 @@ index 7d19ec833d61c2f75b5eb75d7eb291c7366a1a9a..7631ed0c338e5634bbe7ffa3f8e409e5
          } catch (Exception exception) {
              MinecraftServer.LOGGER.fatal("Failed to start the minecraft server", exception);
          }
-@@ -1483,7 +1571,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -1482,7 +1570,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      }
  
      public static long az() {
@@ -478,7 +478,7 @@ index 7d19ec833d61c2f75b5eb75d7eb291c7366a1a9a..7631ed0c338e5634bbe7ffa3f8e409e5
      }
  
      public int getIdleTimeout() {
-@@ -1589,6 +1677,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -1588,6 +1676,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          return this.ab;
      }
  

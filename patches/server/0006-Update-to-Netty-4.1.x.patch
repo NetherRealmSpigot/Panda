@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: hpfxd <me@hpfxd.com>
-Date: Wed, 27 Oct 2021 06:29:44 -0400
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:09:22 +0800
 Subject: [PATCH] Update to Netty 4.1.x
 
 
@@ -34,13 +34,13 @@ index a3683ff6a707c5966896a363afc39a0aa7c64390..242341aea3f7515693240a643ca1f398
          val cbLibsPkg = "org.bukkit.craftbukkit.libs"
  
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index e2eb305468ff76026dc9b24d59394cfc94501273..b48eeb63ad61b18a630f2feb4fd6203e5e3e6c80 100644
+index 114d179e8204fa4de41e056313b1430bfee3df88..8cac4a4e6dbe01265b6edde07320acdaa8ca8adf 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -20,6 +20,10 @@ import java.nio.channels.GatheringByteChannel;
- import java.nio.channels.ScatteringByteChannel;
+@@ -21,6 +21,10 @@ import java.nio.channels.ScatteringByteChannel;
  import java.nio.charset.Charset;
  import java.util.UUID;
+ import custom.spigot.CustomTranslateItem;
 +// PandaSpigot start
 +import io.netty.util.ByteProcessor;
 +import java.nio.channels.FileChannel;
@@ -48,7 +48,7 @@ index e2eb305468ff76026dc9b24d59394cfc94501273..b48eeb63ad61b18a630f2feb4fd6203e
  
  import org.bukkit.craftbukkit.inventory.CraftItemStack; // CraftBukkit
  
-@@ -221,7 +225,11 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -223,7 +227,11 @@ public class PacketDataSerializer extends ByteBuf {
          } else if (j < 0) {
              throw new DecoderException("The received encoded string buffer length is less than zero! Weird string!");
          } else {
@@ -61,7 +61,7 @@ index e2eb305468ff76026dc9b24d59394cfc94501273..b48eeb63ad61b18a630f2feb4fd6203e
  
              if (s.length() > i) {
                  throw new DecoderException("The received string length is longer than maximum allowed (" + j + " > " + i + ")");
-@@ -822,4 +830,266 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -824,4 +832,266 @@ public class PacketDataSerializer extends ByteBuf {
      public boolean release(int i) {
          return this.a.release(i);
      }

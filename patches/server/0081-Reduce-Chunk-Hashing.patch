@@ -6,10 +6,10 @@ Subject: [PATCH] Reduce Chunk Hashing
 These changes are from Akarin, previously called TorchSpigot
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 9d31e75170c96103cd74557323af84dfbd9964ab..7085cb503db3e1e585417ce4300c6be075c7d2fe 100644
+index 7033f130634c89b699853f25120e872dc4ab69da..ed8f9676fc5513230849f103cfc0b1b5116cde59 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -56,8 +56,9 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -58,8 +58,9 @@ public class ChunkProviderServer implements IChunkProvider {
      }
  
      public void queueUnload(int i, int j) {
@@ -20,7 +20,7 @@ index 9d31e75170c96103cd74557323af84dfbd9964ab..7085cb503db3e1e585417ce4300c6be0
          if (chunk != null && chunk.world.paperSpigotConfig.useAsyncLighting && (chunk.pendingLightUpdates.get() > 0 || chunk.world.getTime() - chunk.lightUpdateTime < 20)) {
              return;
          }
-@@ -78,7 +79,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -80,7 +81,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  // CraftBukkit start
                  this.unloadQueue.add(i, j);
  
@@ -29,7 +29,7 @@ index 9d31e75170c96103cd74557323af84dfbd9964ab..7085cb503db3e1e585417ce4300c6be0
                  if (c != null) {
                      c.mustSave = true;
                  }
-@@ -88,7 +89,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -90,7 +91,7 @@ public class ChunkProviderServer implements IChunkProvider {
              // CraftBukkit start
              this.unloadQueue.add(i, j);
  
@@ -38,7 +38,7 @@ index 9d31e75170c96103cd74557323af84dfbd9964ab..7085cb503db3e1e585417ce4300c6be0
              if (c != null) {
                  c.mustSave = true;
              }
-@@ -146,8 +147,9 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -167,8 +168,9 @@ public class ChunkProviderServer implements IChunkProvider {
          return chunk;
      }
      public Chunk originalGetChunkAt(int i, int j) {
@@ -49,7 +49,7 @@ index 9d31e75170c96103cd74557323af84dfbd9964ab..7085cb503db3e1e585417ce4300c6be0
          boolean newChunk = false;
          // CraftBukkit end
  
-@@ -173,7 +175,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -205,7 +207,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  newChunk = true; // CraftBukkit
              }
  

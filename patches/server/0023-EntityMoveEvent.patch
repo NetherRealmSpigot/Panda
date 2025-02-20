@@ -1,14 +1,14 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: hpfxd <me@hpfxd.com>
-Date: Mon, 1 Nov 2021 11:46:53 -0400
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:30:34 +0800
 Subject: [PATCH] EntityMoveEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 72c7e6fc8bb0a71877d6759af44d39030bcf51f5..1353a791235ae3b820072fa80ef60c3c6723e75d 100644
+index 7d4b647c6f9d798ea616efc9e46657ed587d4229..1be5bdec8a3169fa1eb545f5ff6e25bff4a95ab5 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1665,6 +1665,21 @@ public abstract class EntityLiving extends Entity {
+@@ -1683,6 +1683,21 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.b();
@@ -29,12 +29,12 @@ index 72c7e6fc8bb0a71877d6759af44d39030bcf51f5..1353a791235ae3b820072fa80ef60c3c
 +        // PandaSpigot end
      }
  
-     protected void doTick() {}
+     private void checkWings() {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f2ba1733dcd66ef43bf6262f5fcf241c71d2d26f..9b3028ddc71ea072a53d44d49fc66865fdcd4d36 100644
+index adef7522752cc3a773b11c0e9fa115e0d22632e6..4e780e6f561d4cd5de31551107bf037c46b848e5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -909,6 +909,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
+@@ -908,6 +908,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
  
              // if (i == 0 || this.getAllowNether()) {
                  WorldServer worldserver = this.worlds.get(i);

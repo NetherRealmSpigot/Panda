@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Thinkofdeath <thinkofdeath@spigotmc.org>
-Date: Wed, 19 Oct 2022 19:21:01 -0300
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:46:07 +0800
 Subject: [PATCH] Fix issue with ProtocolSupport
 
 This is a particularly severe/exploitable issue -- clients can send packets forcing the server to allocate any valid array size, without actually sending any data for it to fill. This is fixed by limiting the size of read byte arrays to at most Short.MAX_VALUE (31 KB).
@@ -37,12 +37,12 @@ index 0000000000000000000000000000000000000000..7e420027fa1e8c36b518beaf91cb5812
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 6c46349fb24856bb2b0f94d84536f64d96daeece..a7b87ca013f0a08176a20aeb0bd0988fe5855624 100644
+index 4000b8e04af92e03154194ec0f2eae9b585b3442..6933f90f985941c418536129c2f994ea54ba136f 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -31,7 +31,21 @@ public class PacketDataSerializer extends ByteBuf {
- 
+@@ -33,7 +33,21 @@ public class PacketDataSerializer extends ByteBuf {
      private final ByteBuf a;
+     public final int version;
  
 +    // PandaSpigot start - large packet limit
 +    private static final int DEFAULT_LIMIT = Short.MAX_VALUE;
@@ -60,9 +60,9 @@ index 6c46349fb24856bb2b0f94d84536f64d96daeece..a7b87ca013f0a08176a20aeb0bd0988f
 +        this.allowLargePackets = com.hpfxd.pandaspigot.CompactHacks.hasProtocolSupport();
 +    // PandaSpigot end
          this.a = bytebuf;
+         version = 47;
      }
- 
-@@ -52,7 +66,7 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -60,7 +74,7 @@ public class PacketDataSerializer extends ByteBuf {
  
      // Paper start
      public byte[] a() {

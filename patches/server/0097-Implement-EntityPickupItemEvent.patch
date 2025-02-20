@@ -5,10 +5,10 @@ Subject: [PATCH] Implement EntityPickupItemEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 60ba16d231e2d614f56aee3c7ba5c0d4715d0269..ecde0d9ec034024355c09b249694ce118b3b10bc 100644
+index f9f0c0ac9196c581d1eeb3c40dce93fee913d13a..02c905051e8bfb73cbc166f58d1f4d313ed9c88a 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -442,6 +442,16 @@ public class EntityArrow extends Entity implements IProjectile {
+@@ -443,6 +443,16 @@ public class EntityArrow extends Entity implements IProjectile {
                  if (event.isCancelled()) {
                      return;
                  }
@@ -26,10 +26,10 @@ index 60ba16d231e2d614f56aee3c7ba5c0d4715d0269..ecde0d9ec034024355c09b249694ce11
              // CraftBukkit end
              boolean flag = this.fromPlayer == 1 || this.fromPlayer == 2 && entityhuman.abilities.canInstantlyBuild;
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index c1f100c3bd68329b77f9a899cc7353374064daf6..0b6427cc5d0bbb81217f3da261c2e0f4a4fdca3a 100644
+index cd3079bae2604ed8d03ce0e3bcc582f354248940..0c6a2912e4ec144abf5d67a807b232888a15a746 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -396,7 +396,14 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -426,7 +426,14 @@ public abstract class EntityInsentient extends EntityLiving {
                  }
              }
  
@@ -46,10 +46,10 @@ index c1f100c3bd68329b77f9a899cc7353374064daf6..0b6427cc5d0bbb81217f3da261c2e0f4
                      this.a(itemstack1, 0.0F);
                  }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 1f8b1c726ef7343ee7feb1e4ea4c1ef8cc453723..47272471c8477cb34720b116c212cd3f61f4735f 100644
+index b59ffc5ea31bfbebef2f45bf8cdaf9c166e0834a..b06d4dda99d72511e3838cd025d3d4d61b46a7a8 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -312,11 +312,21 @@ public class EntityItem extends Entity {
+@@ -314,11 +314,21 @@ public class EntityItem extends Entity {
                  PlayerPickupItemEvent event = new PlayerPickupItemEvent((org.bukkit.entity.Player) entityhuman.getBukkitEntity(), (org.bukkit.entity.Item) this.getBukkitEntity(), remaining);
                  // event.setCancelled(!entityhuman.canPickUpLoot); TODO
                  this.world.getServer().getPluginManager().callEvent(event);

@@ -28,10 +28,10 @@ index b5f16e8cab9e43ad7597b2ea5bc921399b37872b..bde014f003bccca916dbc74fc27436bf
      public KnockbackConfig knockback;
      
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4391ad7e7cf547b5e179c06e64b3a6e02cbe7a41..5842cedc81b90b4f3565d71ba5dfa8c0c98dfca6 100644
+index 4b6582ad3a2f1dc3e6a62f8b501e24c8cb0417b2..ea7c62ba0fec3a61ee5fbeaf3f8918672595ae0b 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -68,6 +68,13 @@ import org.github.paperspigot.PaperSpigotConfig; // PaperSpigot
+@@ -70,6 +70,13 @@ import custom.spigot.PacketProcessor;
  public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerListBox {
  
      private static final Logger c = LogManager.getLogger();
@@ -45,7 +45,7 @@ index 4391ad7e7cf547b5e179c06e64b3a6e02cbe7a41..5842cedc81b90b4f3565d71ba5dfa8c0
      public final NetworkManager networkManager;
      private final MinecraftServer minecraftServer;
      public EntityPlayer player;
-@@ -274,7 +281,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -280,7 +287,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
  
                          // If the event is cancelled we move the player back to their old location.
                          if (event.isCancelled()) {
@@ -59,7 +59,7 @@ index 4391ad7e7cf547b5e179c06e64b3a6e02cbe7a41..5842cedc81b90b4f3565d71ba5dfa8c0
                              return;
                          }
  
-@@ -518,6 +531,16 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -526,6 +539,16 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
      }
  
      private void internalTeleport(double d0, double d1, double d2, float f, float f1, Set set) {

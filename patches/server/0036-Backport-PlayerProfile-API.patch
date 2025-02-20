@@ -1,9 +1,8 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: hpfxd <me@hpfxd.com>
-Date: Thu, 4 Nov 2021 13:10:10 -0400
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:31:54 +0800
 Subject: [PATCH] Backport PlayerProfile API
 
-Tested using a plugin built against 1.16.5 Paper API.
 
 diff --git a/src/main/java/com/destroystokyo/paper/profile/CraftPlayerProfile.java b/src/main/java/com/destroystokyo/paper/profile/CraftPlayerProfile.java
 new file mode 100644
@@ -307,7 +306,7 @@ index 0000000000000000000000000000000000000000..c48b1cca7ac3b61e1a81b02cdb1a5c82
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 9034e1ad7a013c7288e68322a65798e40d8b851d..86ab9994079c6e18e3aed885db4171d0d87b4c1a 100644
+index e74ec00de030cd3b02492442a0232e8d41b95f87..11e05ea9e44e1f0411ec55553236038d755f9aad 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -57,7 +57,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -320,10 +319,10 @@ index 9034e1ad7a013c7288e68322a65798e40d8b851d..86ab9994079c6e18e3aed885db4171d0
      public EntityFishingHook hookedFish;
      public boolean affectsSpawning = true; // PaperSpigot
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 86abea9555bdd23eed4a2a92cc5b1907f5a081c7..a82b1d140f3e3abbce55e9d96cc340fb6a8b8642 100644
+index 6d4fc07fa50d54eca9dd979b95a8af22d32a4037..7d08a01dd8fa3fca55c1ddef17a45d8ccdcd7e66 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1624,6 +1624,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
+@@ -1623,6 +1623,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
          return true;
      }
  
@@ -365,7 +364,7 @@ index 0f82e06cba1c245846b665ee00ab9a6e388884d3..474f43eab7ceb63ab04e2ebbcdd9f73d
          UserCache.UserCacheEntry usercache_usercacheentry = (UserCache.UserCacheEntry) this.d.get(uuid);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1caffab6e75abf6010e8f1f2d2a29a2a22692fb7..e218b127c6dcdce2c4f8154684f58d4295c6c247 100644
+index ea1bb36244762f4ab4610f832227f8af4ce8aa54..6b796a1327786c7b9e379ae121a7b931e7a362eb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1769,6 +1769,27 @@ public final class CraftServer implements Server {
@@ -420,18 +419,18 @@ index 77f5dcc67f716a517c0dec6c5308469a91bbbe23..04ca21949a7d63b4265de2321303a1c2
      	return getBlockFace(rotation);
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 801e19baa711b517eb437a173ea1edcc38b2e7e8..c588468c0af427efa3133e97de071544459a068a 100644
+index 99d4e8d52bf38421fd6da94c39444fe782875f73..ec7a89c30b5ec306bb962c48800a8e0928a3788c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -973,9 +973,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
-         if (hiddenPlayers.contains(player.getUniqueId())) return;
+@@ -977,9 +977,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         if (!override && hiddenPlayers.contains(player.getUniqueId())) return;
          hiddenPlayers.add(player.getUniqueId());
  
 +        // PandaSpigot start
 +        EntityPlayer other = ((CraftPlayer) player).getHandle();
-+        this.unregisterPlayer(other);
++        this.unregisterPlayer(other, hideList);
 +    }
-+    private void unregisterPlayer(EntityPlayer other) {
++    private void unregisterPlayer(EntityPlayer other, boolean hideList) {
          //remove this player from the hidden player's EntityTrackerEntry
          EntityTracker tracker = ((WorldServer) entity.world).tracker;
 -        EntityPlayer other = ((CraftPlayer) player).getHandle();
@@ -439,30 +438,30 @@ index 801e19baa711b517eb437a173ea1edcc38b2e7e8..c588468c0af427efa3133e97de071544
          EntityTrackerEntry entry = (EntityTrackerEntry) tracker.trackedEntities.get(other.getId());
          if (entry != null) {
              entry.clear(getHandle());
-@@ -993,8 +998,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1002,8 +1007,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          if (!hiddenPlayers.contains(player.getUniqueId())) return;
          hiddenPlayers.remove(player.getUniqueId());
  
 -        EntityTracker tracker = ((WorldServer) entity.world).tracker;
 +        // PandaSpigot start
          EntityPlayer other = ((CraftPlayer) player).getHandle();
-+        this.registerPlayer(other);
++        this.registerPlayer(other, showList);
 +    }
-+    private void registerPlayer(EntityPlayer other) {
++    private void registerPlayer(EntityPlayer other, boolean showList) {
 +        EntityTracker tracker = ((WorldServer) entity.world).tracker;
 +        // PandaSpigot end
  
-         getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, other));
- 
-@@ -1003,6 +1013,58 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         if (showList)
+             getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, other));
+@@ -1013,6 +1023,58 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
              entry.updatePlayer(getHandle());
          }
      }
 +    // PandaSpigot start
 +    private void reregisterPlayer(EntityPlayer player) {
 +        if (!hiddenPlayers.contains(player.getUniqueID())) {
-+            unregisterPlayer(player);
-+            registerPlayer(player);
++            unregisterPlayer(player, true);
++            registerPlayer(player, true);
 +        }
 +    }
 +

@@ -6,10 +6,10 @@ Subject: [PATCH] Cache chunk coordinations
 Prevent the creation of multiple Chunk Coordinations by calling the Chunk#j method
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index ab0d41cadabe4c010751994515925525df66dace..03fe76355813497a5db33ad185db0e4b40c6f85a 100644
+index bfeababe859d5ed658bf8afe5796cf49a4e38626..592025a50da46dbe7a4b51bdde097560332a2e39 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -129,6 +129,8 @@ public class Chunk {
+@@ -130,6 +130,8 @@ public class Chunk {
      }
      // CraftBukkit end
  
@@ -18,7 +18,7 @@ index ab0d41cadabe4c010751994515925525df66dace..03fe76355813497a5db33ad185db0e4b
      public Chunk(World world, int i, int j) {
          this.sections = new ChunkSection[16];
          this.e = new byte[256];
-@@ -154,6 +156,7 @@ public class Chunk {
+@@ -155,6 +157,7 @@ public class Chunk {
          if (!(this instanceof EmptyChunk)) {
              this.bukkitChunk = new org.bukkit.craftbukkit.CraftChunk(this);
          }
@@ -26,7 +26,7 @@ index ab0d41cadabe4c010751994515925525df66dace..03fe76355813497a5db33ad185db0e4b
      }
  
      public org.bukkit.Chunk bukkitChunk;
-@@ -1201,7 +1204,7 @@ public class Chunk {
+@@ -1204,7 +1207,7 @@ public class Chunk {
      }
  
      public ChunkCoordIntPair j() {

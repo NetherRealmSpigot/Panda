@@ -6,10 +6,10 @@ Subject: [PATCH] Add internal setMaxStackSize method for materials
 This is to be used by internal systems that need to set a Material's maximum stack size dynamically, such as stackable buckets in Paper's config.
 
 diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
-index 0fb260555ce50f5348293a17f85512a4fb08918d..0fd42a85f05be7ee26e63d241645745d63becbee 100644
+index bc930d19ea3525763aa5a938c8458ae98dfddb4e..1d168759fc79db1fb186f0e1085c8fdb25b801b2 100644
 --- a/src/main/java/org/bukkit/Material.java
 +++ b/src/main/java/org/bukkit/Material.java
-@@ -461,7 +461,7 @@ public enum Material {
+@@ -462,7 +462,7 @@ public enum Material {
      private final Constructor<? extends MaterialData> ctor;
      private static Material[] byId = new Material[383];
      private final static Map<String, Material> BY_NAME = Maps.newHashMap();
@@ -18,7 +18,7 @@ index 0fb260555ce50f5348293a17f85512a4fb08918d..0fd42a85f05be7ee26e63d241645745d
      private final short durability;
  
      private Material(final int id) {
-@@ -517,6 +517,21 @@ public enum Material {
+@@ -518,6 +518,21 @@ public enum Material {
      public int getMaxStackSize() {
          return maxStack;
      }

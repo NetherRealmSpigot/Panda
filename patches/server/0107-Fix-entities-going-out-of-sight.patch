@@ -5,10 +5,10 @@ Subject: [PATCH] Fix entities going out of sight
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index b4f301a3eb660b9bf080c4f6b4e3bbaa3678a8d6..a4364ccb14038d40450abc7d17ed102424445b9d 100644
+index b23cd8a5aa2ce7c56bcf35a3263ff54da503aecf..8238c9145d60272dbbd49e03bb01d05d22f7c76f 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -296,6 +296,21 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -302,6 +302,21 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
  
      }
  

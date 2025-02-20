@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: hpfxd <me@hpfxd.com>
-Date: Fri, 29 Oct 2021 07:56:48 -0400
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:29:49 +0800
 Subject: [PATCH] Allow controlled flushing for network manager
 
 Only make one flush call when emptying the packet queue too.
@@ -8,12 +8,12 @@ Only make one flush call when emptying the packet queue too.
 This patch will be used to optimise out flush calls in later patches.
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 7d5a3c4b6d9958efde5f918963631603efd33877..b455a3159cd79704ba8da66ca540a4ea48719f05 100644
+index eecca1887d1bbec134b1512e12b138455f831d17..c82214180465252e31823f9aa0af75aecc1c808d 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
-@@ -81,6 +81,38 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
-     public EnumProtocol protocol;
+@@ -82,6 +82,38 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
      // PandaSpigot end
+     public static final AttributeKey<Integer> protocolVersion = AttributeKey.valueOf("protocol_version");
  
 +    // PandaSpigot start - allow controlled flushing
 +    volatile boolean canFlush = true;
@@ -50,7 +50,7 @@ index 7d5a3c4b6d9958efde5f918963631603efd33877..b455a3159cd79704ba8da66ca540a4ea
      public NetworkManager(EnumProtocolDirection enumprotocoldirection) {
          this.h = enumprotocoldirection;
      }
-@@ -198,7 +230,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -208,7 +240,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
              MinecraftServer.getServer().isMainThread() && packet.isReady() && this.i.isEmpty() &&
                          (packet.getExtraPackets() == null || packet.getExtraPackets().isEmpty())
          ))) {
@@ -59,7 +59,7 @@ index 7d5a3c4b6d9958efde5f918963631603efd33877..b455a3159cd79704ba8da66ca540a4ea
              return;
          }
          // write the packets to the queue, then flush - antixray hooks there already
-@@ -224,6 +256,14 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -234,6 +266,14 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
  
      private void dispatchPacket(final Packet packet, final GenericFutureListener<? extends Future<? super Void>>[] agenericfuturelistener) { this.a(packet, agenericfuturelistener); } // PandaSpigot - OBFHELPER
      private void a(final Packet packet, final GenericFutureListener<? extends Future<? super Void>>[] agenericfuturelistener) {
@@ -74,7 +74,7 @@ index 7d5a3c4b6d9958efde5f918963631603efd33877..b455a3159cd79704ba8da66ca540a4ea
          final EnumProtocol enumprotocol = EnumProtocol.a(packet);
          final EnumProtocol enumprotocol1 = (EnumProtocol) this.channel.attr(NetworkManager.c).get();
  
-@@ -245,7 +285,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -255,7 +295,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
              }
              try {
              // PandaSpigot end
@@ -83,7 +83,7 @@ index 7d5a3c4b6d9958efde5f918963631603efd33877..b455a3159cd79704ba8da66ca540a4ea
  
              if (agenericfuturelistener != null) {
                  channelfuture.addListeners(agenericfuturelistener);
-@@ -278,7 +318,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -288,7 +328,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
                  }
                  try {
                  // PandaSpigot end
@@ -92,7 +92,7 @@ index 7d5a3c4b6d9958efde5f918963631603efd33877..b455a3159cd79704ba8da66ca540a4ea
  
                      if (agenericfuturelistener != null) {
                          channelfuture.addListeners(agenericfuturelistener);
-@@ -321,22 +361,34 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -331,22 +371,34 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
      }
      private boolean processQueue() {
          if (this.i.isEmpty()) return true;

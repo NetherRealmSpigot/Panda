@@ -1,0 +1,145 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 14:30:34 +0800
+Subject: [PATCH] Adaption
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 22a5fe9c59d1b2a8283e1ebb503c77b2be892fb5..ec8fa12ca39fa759c575aff36be83ecfdf3d086b 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -12,17 +12,17 @@ dependencies {
+     api("commons-lang:commons-lang:2.6")
+     api("org.avaje:ebean:2.8.1")
+     api("com.googlecode.json-simple:json-simple:1.1.1")
+-    api("org.yaml:snakeyaml:1.15")
++    api("org.yaml:snakeyaml:2.3")
+     api("net.md-5:bungeecord-chat:1.8-SNAPSHOT")
+     compileOnlyApi("net.sf.trove4j:trove4j:3.0.3") // provided by server
+ 
+     // bundled with Minecraft, should be kept in sync
+-    api("com.google.guava:guava:17.0")
+-    api("com.google.code.gson:gson:2.2.4")
+-    api("org.slf4j:slf4j-api:1.7.35") // PandaSpigot - Add SLF4J Logger
++    api("com.google.guava:guava:33.3.1-jre")
++    api("com.google.code.gson:gson:2.8.9")
++    api("org.slf4j:slf4j-api:2.0.16") // PandaSpigot - Add SLF4J Logger
+ 
+     // testing
+-    testImplementation("junit:junit:4.12")
++    testImplementation("junit:junit:4.13.1")
+     testImplementation("org.hamcrest:hamcrest-library:1.3")
+     testImplementation("net.sf.trove4j:trove4j:3.0.3") // required by tests
+ }
+diff --git a/src/main/java/org/bukkit/configuration/file/YamlConstructor.java b/src/main/java/org/bukkit/configuration/file/YamlConstructor.java
+index 73ad722a82f3f5429a67585d426f7b023d1420ba..e1d79e25be6661bcf2c5408d2e2a882541cf9ce8 100644
+--- a/src/main/java/org/bukkit/configuration/file/YamlConstructor.java
++++ b/src/main/java/org/bukkit/configuration/file/YamlConstructor.java
+@@ -3,6 +3,7 @@ package org.bukkit.configuration.file;
+ import java.util.LinkedHashMap;
+ import java.util.Map;
+ 
++import org.yaml.snakeyaml.LoaderOptions;
+ import org.yaml.snakeyaml.nodes.Node;
+ import org.yaml.snakeyaml.constructor.SafeConstructor;
+ import org.yaml.snakeyaml.error.YAMLException;
+@@ -13,6 +14,8 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
+ public class YamlConstructor extends SafeConstructor {
+ 
+     public YamlConstructor() {
++        super(new LoaderOptions());
++        this.getLoadingConfig().setAllowDuplicateKeys(false);
+         this.yamlConstructors.put(Tag.MAP, new ConstructCustomObject());
+     }
+ 
+diff --git a/src/main/java/org/bukkit/configuration/file/YamlRepresenter.java b/src/main/java/org/bukkit/configuration/file/YamlRepresenter.java
+index bc9c098d51d71e5c5b78c773826f13848f53439d..ad79f6a102acd8599c479acd66f2e3af58885c37 100644
+--- a/src/main/java/org/bukkit/configuration/file/YamlRepresenter.java
++++ b/src/main/java/org/bukkit/configuration/file/YamlRepresenter.java
+@@ -7,12 +7,14 @@ import org.bukkit.configuration.ConfigurationSection;
+ import org.bukkit.configuration.serialization.ConfigurationSerializable;
+ import org.bukkit.configuration.serialization.ConfigurationSerialization;
+ 
++import org.yaml.snakeyaml.DumperOptions;
+ import org.yaml.snakeyaml.nodes.Node;
+ import org.yaml.snakeyaml.representer.Representer;
+ 
+ public class YamlRepresenter extends Representer {
+ 
+     public YamlRepresenter() {
++        super(new DumperOptions());
+         this.multiRepresenters.put(ConfigurationSection.class, new RepresentConfigurationSection());
+         this.multiRepresenters.put(ConfigurationSerializable.class, new RepresentConfigurationSerializable());
+     }
+diff --git a/src/main/java/org/bukkit/plugin/PluginDescriptionFile.java b/src/main/java/org/bukkit/plugin/PluginDescriptionFile.java
+index c82928ef8f8a2d2877ce1f626778fb543bcf8a07..6bc8c622ea2f113ca91711a7e5ab7d9becac6e73 100644
+--- a/src/main/java/org/bukkit/plugin/PluginDescriptionFile.java
++++ b/src/main/java/org/bukkit/plugin/PluginDescriptionFile.java
+@@ -10,11 +10,14 @@ import java.util.Map;
+ import java.util.Set;
+ 
+ import org.bukkit.command.CommandExecutor;
++import org.bukkit.command.CommandSender;
+ import org.bukkit.command.PluginCommand;
++import org.bukkit.command.TabCompleter;
+ import org.bukkit.plugin.java.JavaPlugin;
+ import org.bukkit.permissions.Permissible;
+ import org.bukkit.permissions.Permission;
+ import org.bukkit.permissions.PermissionDefault;
++import org.yaml.snakeyaml.LoaderOptions;
+ import org.yaml.snakeyaml.Yaml;
+ import org.yaml.snakeyaml.constructor.AbstractConstruct;
+ import org.yaml.snakeyaml.constructor.SafeConstructor;
+@@ -178,8 +181,9 @@ public final class PluginDescriptionFile {
+     private static final ThreadLocal<Yaml> YAML = new ThreadLocal<Yaml>() {
+         @Override
+         protected Yaml initialValue() {
+-            return new Yaml(new SafeConstructor() {
++            return new Yaml(new SafeConstructor(new LoaderOptions()) {
+                 {
++                    this.getLoadingConfig().setAllowDuplicateKeys(false);
+                     yamlConstructors.put(null, new AbstractConstruct() {
+                         @Override
+                         public Object construct(final Node node) {
+diff --git a/src/test/java/org/bukkit/metadata/FixedMetadataValueTest.java b/src/test/java/org/bukkit/metadata/FixedMetadataValueTest.java
+index 5583b274b3e934cc694d0622df43f9dfac618555..677a55176384a71498f99dc219976a84115f67c0 100644
+--- a/src/test/java/org/bukkit/metadata/FixedMetadataValueTest.java
++++ b/src/test/java/org/bukkit/metadata/FixedMetadataValueTest.java
+@@ -13,15 +13,15 @@ public class FixedMetadataValueTest {
+ 
+     @Test
+     public void testBasic() {
+-        subject = new FixedMetadataValue(plugin, new Integer(50));
++        subject = new FixedMetadataValue(plugin, 50);
+         assertSame(plugin, subject.getOwningPlugin());
+-        assertEquals(new Integer(50), subject.value());
++        assertEquals(50, subject.value());
+     }
+ 
+     @Test
+     public void testNumberTypes() {
+-        subject = new FixedMetadataValue(plugin, new Integer(5));
+-        assertEquals(new Integer(5), subject.value());
++        subject = new FixedMetadataValue(plugin, 5);
++        assertEquals(5, subject.value());
+         assertEquals(5, subject.asInt());
+         assertEquals(true, subject.asBoolean());
+         assertEquals(5, subject.asByte());
+diff --git a/src/test/java/org/bukkit/metadata/MetadataValueAdapterTest.java b/src/test/java/org/bukkit/metadata/MetadataValueAdapterTest.java
+index 7d8a17fee5a9938b2806e3862d5b93c8f6ec58cd..6bb9e5a5afbabe6195b27fd6ae97e7cc5d8eb07e 100644
+--- a/src/test/java/org/bukkit/metadata/MetadataValueAdapterTest.java
++++ b/src/test/java/org/bukkit/metadata/MetadataValueAdapterTest.java
+@@ -16,10 +16,10 @@ public class MetadataValueAdapterTest {
+         assertEquals(mv.getOwningPlugin(), this.plugin);
+ 
+         // Check value-getting and invalidation.
+-        assertEquals(new Integer(1), mv.value());
+-        assertEquals(new Integer(2), mv.value());
++        assertEquals(1, mv.value());
++        assertEquals(2, mv.value());
+         mv.invalidate();
+-        assertEquals(new Integer(1), mv.value());
++        assertEquals(1, mv.value());
+     }
+ 
+     @Test

@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: hpfxd <me@hpfxd.com>
-Date: Wed, 27 Oct 2021 01:43:01 -0400
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:03:10 +0800
 Subject: [PATCH] Setup Gradle project
 
 
@@ -141,7 +141,7 @@ index 0000000000000000000000000000000000000000..a3683ff6a707c5966896a363afc39a0a
 +}
 diff --git a/pom.xml b/pom.xml
 deleted file mode 100644
-index 644305e68a20f43286c917b15e04a43f05dce254..0000000000000000000000000000000000000000
+index f9e8b70e5d3e62f6b0af6db9243c0e522978b0fa..0000000000000000000000000000000000000000
 --- a/pom.xml
 +++ /dev/null
 @@ -1,279 +0,0 @@
@@ -191,7 +191,7 @@ index 644305e68a20f43286c917b15e04a43f05dce254..00000000000000000000000000000000
 -        <dependency>
 -            <groupId>org.apache.logging.log4j</groupId>
 -            <artifactId>log4j-core</artifactId>
--            <version>2.17.0</version> <!-- Paper - Update Log4j -->
+-            <version>2.24.1</version>
 -            <scope>compile</scope>
 -        </dependency>
 -        <dependency>

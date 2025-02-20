@@ -20,10 +20,10 @@ index 1e0393f667029809ac3476069cebe1ef34afadc8..3e85450bbccc54414be7998562fadc92
 +    public boolean optimizeArmorStandMovement = false; // Doesn't fully emulate vanilla behavior, see TacoSpigot issue #1
  }
 diff --git a/src/main/java/net/minecraft/server/EntityArmorStand.java b/src/main/java/net/minecraft/server/EntityArmorStand.java
-index 2ea4a5fd32629a7931189786f86dce99d1db6d63..f8415dd404e14d85290724e66abc8a1ab1db95cb 100644
+index 4b498669aa731b36fd3ad3936dc04618b914c32f..74fbdc14b2c258565d3e278ef246d3b4e27d0716 100644
 --- a/src/main/java/net/minecraft/server/EntityArmorStand.java
 +++ b/src/main/java/net/minecraft/server/EntityArmorStand.java
-@@ -705,4 +705,12 @@ public class EntityArmorStand extends EntityLiving {
+@@ -712,4 +712,12 @@ public class EntityArmorStand extends EntityLiving {
      public boolean ad() {
          return super.ad() && !this.s();
      }
@@ -37,7 +37,7 @@ index 2ea4a5fd32629a7931189786f86dce99d1db6d63..f8415dd404e14d85290724e66abc8a1a
 +    // PandaSpigot end
  }
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index fcdc06150fec7bd5dc907b5337085be1360373eb..ea2bc1111714eefaf6352b74f82f5e86e1350f28 100644
+index d1283f642f7883dcca7b2dbbba5fb37c934947b4..bebcca8abf08ca48b82bef6fe3ee6bd8d68e2a05 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1352,6 +1352,7 @@ public abstract class World implements IBlockAccess {

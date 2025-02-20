@@ -19,10 +19,10 @@ index c1110242136e8fd98661886920b765bb5367c37d..81fc97dc295677f5c2914e8c9b97a3f4
              org.bukkit.block.Block block = world.getWorld().getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ());
              BlockPhysicsEvent event = new BlockPhysicsEvent(block, block.getTypeId());
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7b1bb09da5f87de37df6c01252996bf32d43259a..abdcaf571f36eff832bf639d0486c988e76116f9 100644
+index 3054d749960668f1b158d2fb73666414b8c41882..ed4a1b393788516a8492aee68db2dd3273608ee0 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -914,6 +914,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
+@@ -913,6 +913,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
              // if (i == 0 || this.getAllowNether()) {
                  WorldServer worldserver = this.worlds.get(i);
                  worldserver.hasEntityMoveEvent = io.papermc.paper.event.entity.EntityMoveEvent.getHandlerList().getRegisteredListeners().length > 0; // PandaSpigot
@@ -31,7 +31,7 @@ index 7b1bb09da5f87de37df6c01252996bf32d43259a..abdcaf571f36eff832bf639d0486c988
                  this.methodProfiler.a(worldserver.getWorldData().getName());
                  /* Drop global time updates
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 42c077870727d1eb40bc9bf5e0a3ca580131331d..589bf95c13e9c78c792498a7b73fd0480f4a503d 100644
+index 8a3f5bd76ff48cf0d69a009101030483705a5595..021bb7bca4db493f656dc529e10837bd6039a0b4 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -574,7 +574,7 @@ public abstract class World implements IBlockAccess {

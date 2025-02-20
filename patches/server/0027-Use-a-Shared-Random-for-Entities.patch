@@ -6,10 +6,10 @@ Subject: [PATCH] Use a Shared Random for Entities
 Reduces memory usage and provides ensures more randomness, Especially since a lot of garbage entity objects get created.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 2da303feee4191d6a47108ef904d32958ce6a23d..58e485c2e5845dda15c33ee1beb170860535f88b 100644
+index d742dba1f64dfb073e9feb442ac6fccf9756b3bd..5fb64eee45691abdb375a6bc1d9255c15b3cfea6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -45,6 +45,20 @@ public abstract class Entity implements ICommandListener {
+@@ -46,6 +46,20 @@ public abstract class Entity implements ICommandListener {
          return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
      }
      // CraftBukikt end
@@ -30,7 +30,7 @@ index 2da303feee4191d6a47108ef904d32958ce6a23d..58e485c2e5845dda15c33ee1beb17086
  
      private static final AxisAlignedBB a = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
      private static int entityCount;
-@@ -160,7 +174,7 @@ public abstract class Entity implements ICommandListener {
+@@ -203,7 +217,7 @@ public abstract class Entity implements ICommandListener {
          this.width = 0.6F;
          this.length = 1.8F;
          this.h = 1;
