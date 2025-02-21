@@ -31,10 +31,10 @@ index 7d4b647c6f9d798ea616efc9e46657ed587d4229..1be5bdec8a3169fa1eb545f5ff6e25bf
  
      private void checkWings() {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index adef7522752cc3a773b11c0e9fa115e0d22632e6..4e780e6f561d4cd5de31551107bf037c46b848e5 100644
+index 2490e7a278162c0202cf8a8598c9229f86f62b87..2c32380a22b9b69f29585bb3d0964f0313cb42fb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -908,6 +908,7 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
+@@ -822,6 +822,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
              // if (i == 0 || this.getAllowNether()) {
                  WorldServer worldserver = this.worlds.get(i);

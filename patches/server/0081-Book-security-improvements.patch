@@ -8,10 +8,10 @@ Co-authored-by: RoccoDev <hey@rocco.dev>
 Co-authored-by: xism4 <soportexism4@gmail.com>
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index a7b87ca013f0a08176a20aeb0bd0988fe5855624..a83d0c8f241858278325d9b9f1943cb73e3fcb9b 100644
+index 6933f90f985941c418536129c2f994ea54ba136f..66bba10ffbd637a09cffe8824c4682abc8e9ef2f 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -167,7 +167,7 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -182,7 +182,7 @@ public class PacketDataSerializer extends ByteBuf {
              return null;
          } else {
              this.readerIndex(i);
@@ -21,10 +21,10 @@ index a7b87ca013f0a08176a20aeb0bd0988fe5855624..a83d0c8f241858278325d9b9f1943cb7
      }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 1f80521c97fd7b0ef263b9e17cb79bcc51db0433..f5ef763b8783a6a275b5d4311d368bed25e3b878 100644
+index 83bbd7cfdd4125bbf509283fd4840a9c8bd077e1..08cf5613fca72a9004661f07aa11e05ad8372b99 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -111,6 +111,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -117,6 +117,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
      private final org.bukkit.craftbukkit.CraftServer server;
      private int lastTick = MinecraftServer.currentTick;
      private int lastDropTick = MinecraftServer.currentTick;
@@ -32,7 +32,7 @@ index 1f80521c97fd7b0ef263b9e17cb79bcc51db0433..f5ef763b8783a6a275b5d4311d368bed
      private int dropCount = 0;
      private static final int SURVIVAL_PLACE_DISTANCE_SQUARED = 6 * 6;
      private static final int CREATIVE_PLACE_DISTANCE_SQUARED = 7 * 7;
-@@ -2058,6 +2059,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -2089,6 +2090,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
  
          try { // CraftBukkit
          if ("MC|BEdit".equals(packetplayincustompayload.a())) {
@@ -46,7 +46,7 @@ index 1f80521c97fd7b0ef263b9e17cb79bcc51db0433..f5ef763b8783a6a275b5d4311d368bed
              packetdataserializer = new PacketDataSerializer(Unpooled.wrappedBuffer(packetplayincustompayload.b()));
  
              try {
-@@ -2091,6 +2099,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -2122,6 +2130,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
  
              return;
          } else if ("MC|BSign".equals(packetplayincustompayload.a())) {

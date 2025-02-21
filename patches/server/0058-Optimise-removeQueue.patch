@@ -5,7 +5,7 @@ Subject: [PATCH] Optimise removeQueue
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 23524af2dd05a6f14ff3bddbf524c5d4d483290f..b4f301a3eb660b9bf080c4f6b4e3bbaa3678a8d6 100644
+index 16667af10d7c9f79d06c86b0a6b4b3460a8c23d1..b23cd8a5aa2ce7c56bcf35a3263ff54da503aecf 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -34,7 +34,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -17,7 +17,7 @@ index 23524af2dd05a6f14ff3bddbf524c5d4d483290f..b4f301a3eb660b9bf080c4f6b4e3bbaa
      private final ServerStatisticManager bK;
      private float bL = Float.MIN_VALUE;
      private float bM = -1.0E8F;
-@@ -213,13 +213,20 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -215,13 +215,20 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          while (!this.removeQueue.isEmpty()) {
              int i = Math.min(this.removeQueue.size(), Integer.MAX_VALUE);
              int[] aint = new int[i];
@@ -40,7 +40,7 @@ index 23524af2dd05a6f14ff3bddbf524c5d4d483290f..b4f301a3eb660b9bf080c4f6b4e3bbaa
  
              this.playerConnection.sendPacket(new PacketPlayOutEntityDestroy(aint));
          }
-@@ -916,7 +923,12 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -936,7 +943,12 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          this.lastSentExp = -1;
          this.bM = -1.0F;
          this.bN = -1;

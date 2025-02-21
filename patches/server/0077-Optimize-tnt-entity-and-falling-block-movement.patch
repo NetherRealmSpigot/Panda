@@ -21,10 +21,10 @@ index 05c9ebb76a3cb19e887bea1311ac36035334b9a1..1e0393f667029809ac3476069cebe1ef
 +    public boolean optimizeLiquidExplosions = true; // This seems like a pretty sane default
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 854cf888d64e50bfd85420bb5dcc93860a64f132..b0aee5e189d70e2f68c3c95a6406467981c25e2b 100644
+index 00692923e0a1c05d8eeded4678ca944b15433b2c..7b9c1f152e734b2dc8231277c45f4b7df5d0b1fd 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -529,7 +529,16 @@ public abstract class Entity implements ICommandListener {
+@@ -572,7 +572,16 @@ public abstract class Entity implements ICommandListener {
                  }
              }
  
@@ -42,7 +42,7 @@ index 854cf888d64e50bfd85420bb5dcc93860a64f132..b0aee5e189d70e2f68c3c95a64064679
              AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
              AxisAlignedBB axisalignedbb1;
-@@ -541,6 +550,8 @@ public abstract class Entity implements ICommandListener {
+@@ -584,6 +593,8 @@ public abstract class Entity implements ICommandListener {
              this.a(this.getBoundingBox().c(0.0D, d1, 0.0D));
              boolean flag1 = this.onGround || d7 != d1 && d7 < 0.0D;
  
@@ -51,7 +51,7 @@ index 854cf888d64e50bfd85420bb5dcc93860a64f132..b0aee5e189d70e2f68c3c95a64064679
              AxisAlignedBB axisalignedbb2;
              Iterator iterator1;
  
-@@ -550,6 +561,8 @@ public abstract class Entity implements ICommandListener {
+@@ -593,6 +604,8 @@ public abstract class Entity implements ICommandListener {
  
              this.a(this.getBoundingBox().c(d0, 0.0D, 0.0D));
  
@@ -83,7 +83,7 @@ index b7d410eeb974eee7b26dce8e3b02ff2051e74f93..6671d4920f4b808d61fd458ef3f26f21
          this.blocks.addAll(hashset);
          float f3 = this.size * 2.0F;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 593267d2cfa206f3ba5fb6df7910b4983be2a42f..b2c0fd70da33900b79d43724ad80979c2cafcbbc 100644
+index c096bb669a3449f30450d54f3b38d30eb86d1724..1d27e0ac9441ca9c07d48d0b62deafb555c68500 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1350,6 +1350,8 @@ public abstract class World implements IBlockAccess {

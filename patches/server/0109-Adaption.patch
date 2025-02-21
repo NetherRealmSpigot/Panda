@@ -351,10 +351,10 @@ index 1af40905e279a30d64bd5c8961797dce3ce2aaf1..a6ba1fd24b14f7b343e2222088345515
  
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9af078a12a11a0c0b918c75d44e6dbabe9132bce..1ec08d35e476143fd3a906de6e578e0ab1e9ff11 100644
+index 02fcf42f41c5a27720e29692e9766b5e11ad4245..72888d94f1c0d256497003bbea0a57c053f3d3a3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1694,7 +1694,8 @@ public abstract class MinecraftServer extends com.hpfxd.pandaspigot.tickloop.Ree
+@@ -1653,7 +1653,8 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              try {
                  return Futures.immediateFuture(callable.call());
              } catch (Exception exception) {

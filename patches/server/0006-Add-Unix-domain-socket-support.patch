@@ -10,10 +10,10 @@ This feature can be enabled by setting the "server-ip" field in server.propertie
 Currently, this feature is only supported on Linux environments with Epoll available.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..8e57df176bcb04b7309a476a5472a41e5e46f8ae 100644
+index d03e165569dd13c28cdd55263f7c182e94a96303..2f5c7232e5ac87bcdd4186af97f389026f67d0ab 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -163,6 +163,28 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -164,6 +164,28 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
  
              this.r = WorldSettings.a(i);
              DedicatedServer.LOGGER.info("Default game type: " + this.r);
@@ -42,7 +42,7 @@ index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..8e57df176bcb04b7309a476a5472a41e
              InetAddress inetaddress = null;
  
              if (this.getServerIp().length() > 0) {
-@@ -172,11 +194,9 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -173,11 +195,9 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              if (this.R() < 0) {
                  this.setPort(this.propertyManager.getInt("server-port", 25565));
              }
@@ -57,7 +57,7 @@ index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..8e57df176bcb04b7309a476a5472a41e
              // PaperSpigot start
              org.github.paperspigot.PaperSpigotConfig.init((File) options.valueOf("paper-settings"));
              org.github.paperspigot.PaperSpigotConfig.registerCommands();
-@@ -188,7 +208,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -189,7 +209,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
  
          if (!org.spigotmc.SpigotConfig.lateBind) {
              try {
@@ -66,7 +66,7 @@ index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..8e57df176bcb04b7309a476a5472a41e
              } catch (IOException ioexception) {
                  DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
                  DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
-@@ -294,7 +314,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -295,7 +315,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
  
          if (org.spigotmc.SpigotConfig.lateBind) {
              try {
@@ -76,10 +76,10 @@ index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..8e57df176bcb04b7309a476a5472a41e
                  DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
                  DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index e1a86a75524c3e3f3a9a4fbd447e01c7cb4d2b78..10a8c440f08535d90d8d1204a23c859ba296aa39 100644
+index 3d6a921bb565d7b3f502fd3499e59bffa4461470..129eace3d175bbaaa53abdee0272b75d5ac7396f 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
-@@ -29,6 +29,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -37,6 +37,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
  
              // CraftBukkit start - Connection throttle
              try {
@@ -87,7 +87,7 @@ index e1a86a75524c3e3f3a9a4fbd447e01c7cb4d2b78..10a8c440f08535d90d8d1204a23c859b
                  long currentTime = System.currentTimeMillis();
                  long connectionThrottle = MinecraftServer.getServer().server.getConnectionThrottle();
                  InetAddress address = ((java.net.InetSocketAddress) this.b.getSocketAddress()).getAddress();
-@@ -57,6 +58,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -65,6 +66,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                          }
                      }
                  }
@@ -95,7 +95,7 @@ index e1a86a75524c3e3f3a9a4fbd447e01c7cb4d2b78..10a8c440f08535d90d8d1204a23c859b
              } catch (Throwable t) {
                  org.apache.logging.log4j.LogManager.getLogger().debug("Failed to check connection throttle", t);
              }
-@@ -103,8 +105,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -111,8 +113,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
                  //if (org.spigotmc.SpigotConfig.bungee) { // PandaSpigot - comment out, we check above!
                      String[] split = packethandshakinginsetprotocol.hostname.split("\00");
                      if ( split.length == 3 || split.length == 4 ) {
@@ -109,10 +109,10 @@ index e1a86a75524c3e3f3a9a4fbd447e01c7cb4d2b78..10a8c440f08535d90d8d1204a23c859b
                      } else
                      {
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 9d23c6c0ccaa91a46cb60474461f3977fa793122..fcf54e3a138f8408d7b85f087be03ca8cedb45f9 100644
+index 6864897ce15f6b1ff48e35b0365e8c9734fdf94d..1c1fe79b8e21abb8211067749dd3f373a7d37d0b 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
-@@ -339,6 +339,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+@@ -349,6 +349,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
      // Spigot Start
      public SocketAddress getRawAddress()
      {
