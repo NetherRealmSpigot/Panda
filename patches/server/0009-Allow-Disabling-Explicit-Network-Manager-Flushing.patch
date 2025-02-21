@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
+Date: Thu, 20 Feb 2025 13:13:33 +0800
+Subject: [PATCH] Allow Disabling Explicit Network Manager Flushing
+
+This seems completely useless since sending packets uses .writeAndFlush.
+
+The logic has been improved to do the
+flushing in the netty event loop, so it doesn't flush on the main
+thread.
+
+Disable flushing by passing -Dpaper.explicit-flush=false
+
+diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
+index 1c1fe79b8e21abb8211067749dd3f373a7d37d0b..578ee6d7262adf199c0751a9a022d1a64b65ee45 100644
+--- a/src/main/java/net/minecraft/server/NetworkManager.java
++++ b/src/main/java/net/minecraft/server/NetworkManager.java
+@@ -74,7 +74,8 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+     private IChatBaseComponent n;
+     private boolean o;
+     private boolean p;
+-    public static final AttributeKey<Integer> protocolVersion = new AttributeKey("protocol_version");
++    private static boolean enableExplicitFlush = Boolean.getBoolean("paper.explicit-flush"); // PandaSpigot
++    public static final AttributeKey<Integer> protocolVersion = AttributeKey.valueOf("protocol_version");
+ 
+     public NetworkManager(EnumProtocolDirection enumprotocoldirection) {
+         this.h = enumprotocoldirection;
+@@ -241,7 +242,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+             ((IUpdatePlayerListBox) this.m).c();
+         }
+ 
+-        this.channel.flush();
++        if (enableExplicitFlush) this.channel.eventLoop().execute(() -> this.channel.flush()); // PandaSpigot - Allow Disabling Explicit Network Manager Flushing
+     }
+ 
+     public SocketAddress getSocketAddress() {
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index c936219196ea403a9d247ad6c8c0ffee79411da2..3add8302c4817ed2612c55f2213db67d139e2a46 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -17,6 +17,7 @@ public class Main {
+     public static boolean useConsole = true;
+ 
+     public static void main(String[] args) {
++        if (System.getProperty("paper.explicit-flush") == null) System.setProperty("paper.explicit-flush", "true"); // PandaSpigot
+         // Todo: Installation script
+         OptionParser parser = new OptionParser() {
+             {
