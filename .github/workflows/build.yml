@@ -1,4 +1,4 @@
-name: Build
+name: Build and publish
 
 on:
   pull_request:
@@ -15,72 +15,20 @@ on:
       - "master"
   workflow_dispatch:
 
+permissions:
+  packages: read
+  actions: read
+  contents: read
 
 jobs:
   build:
+    name: Build and publish
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Build and publish
+        uses: NetherRealmSpigot/reusable-actions/Panda@main
         with:
-          fetch-depth: 0
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: "17"
-          distribution: "temurin"
-          cache: "gradle"
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-      - name: Setup PandaSpigot
-        run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git config --global init.defaultBranch master
-          ./panda setup
-          ./panda patch
-      - name: Build
-        run: ./gradlew build
-      - name: Copy artifacts
-        run: |
-          mkdir -p out
-          mkdir -p out/server
-          mkdir -p out/api
-          cp PandaSpigot-Server/build/libs/pandaspigot-*-SNAPSHOT.jar out/server
-          cp PandaSpigot-API/build/libs/pandaspigot-*-SNAPSHOT.jar out/api
-      - name: Publish server jar
-        id: publish-server-jar
-        if: ${{ (github.ref_name == 'master' && github.event_name == 'push') || github.event_name == 'workflow_dispatch' }}
-        env:
-          CUSTOMSPIGOT_MAVEN_URL: ${{ secrets.PANDASPIGOT_MAVEN }}
-          CUSTOMSPIGOT_MAVEN_USERNAME: ${{ secrets.PANDASPIGOT_MAVEN_USERNAME }}
-          CUSTOMSPIGOT_MAVEN_PASSWORD: ${{ secrets.PANDASPIGOT_MAVEN_PASSWORD }}
-        run: ./gradlew :pandaspigot-server:publishAllPublicationsToCustomSpigotRepository
-        continue-on-error: true
-      - name: Upload server jar artifact
-        uses: actions/upload-artifact@v4
-        if: ${{ steps.publish-server-jar.outcome != 'success' || github.event_name == 'workflow_dispatch' }}
-        with:
-          name: Panda-server-${{ github.run_id }}
-          path: out/server
-          retention-days: 1
-          overwrite: true
-        continue-on-error: true
-      - name: Publish API jar
-        id: publish-api-jar
-        if: ${{ (github.ref_name == 'master' && github.event_name == 'push') || github.event_name == 'workflow_dispatch' }}
-        env:
-          CUSTOMSPIGOT_MAVEN_URL: ${{ secrets.PANDASPIGOT_MAVEN }}
-          CUSTOMSPIGOT_MAVEN_USERNAME: ${{ secrets.PANDASPIGOT_MAVEN_USERNAME }}
-          CUSTOMSPIGOT_MAVEN_PASSWORD: ${{ secrets.PANDASPIGOT_MAVEN_PASSWORD }}
-        run: ./gradlew :pandaspigot-api:publishAllPublicationsToCustomSpigotRepository
-        continue-on-error: true
-      - name: Upload API jar artifact
-        uses: actions/upload-artifact@v4
-        if: ${{ steps.publish-api-jar.outcome != 'success' || github.event_name == 'workflow_dispatch' }}
-        with:
-          name: Panda-api-${{ github.run_id }}
-          path: out/api
-          retention-days: 1
-          overwrite: true
-        continue-on-error: true
+          build-ref: ${{ github.ref }}
+          maven: ${{ secrets.PANDASPIGOT_MAVEN }}
+          maven-username: ${{ secrets.PANDASPIGOT_MAVEN_USERNAME }}
+          maven-password: ${{ secrets.PANDASPIGOT_MAVEN_PASSWORD }}
