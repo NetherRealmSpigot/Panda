@@ -5,7 +5,7 @@ Subject: [PATCH] Publish
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index ec8fa12ca39fa759c575aff36be83ecfdf3d086b..10936bab0a639d5b6562e1ceffab6089fd8e283e 100644
+index f89a0e6be47be33da5ab23418c290918cba1c619..0cb59248e62466e9583909d1aabe88d087995f84 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -1,3 +1,5 @@
