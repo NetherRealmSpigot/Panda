@@ -1,12 +1,6 @@
 name: Build and publish
 
 on:
-  pull_request:
-    paths:
-      - "patches/api/*.patch"
-      - "patches/server/*.patch"
-    branches:
-      - "master"
   push:
     paths:
       - "patches/api/*.patch"
