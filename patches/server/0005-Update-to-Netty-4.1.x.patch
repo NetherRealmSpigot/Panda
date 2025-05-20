@@ -1,11 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: CrimsonEdgeHope <92579614+crimsonedgehope@users.noreply.github.com>
-Date: Thu, 20 Feb 2025 13:09:22 +0800
+From: NorthRealm <155140859+NorthRealm@users.noreply.github.com>
+Date: Tue, 20 May 2025 17:04:04 +0800
 Subject: [PATCH] Update to Netty 4.1.x
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index a3683ff6a707c5966896a363afc39a0aa7c64390..242341aea3f7515693240a643ca1f39846208a9d 100644
+index fa35e6cdc4b3926cc9476830a841e91571117311..68be9d633e9e9fe21613c2f0d4dff5fb65df3f76 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,7 +13,7 @@ dependencies {
@@ -34,13 +34,13 @@ index a3683ff6a707c5966896a363afc39a0aa7c64390..242341aea3f7515693240a643ca1f398
          val cbLibsPkg = "org.bukkit.craftbukkit.libs"
  
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 114d179e8204fa4de41e056313b1430bfee3df88..8cac4a4e6dbe01265b6edde07320acdaa8ca8adf 100644
+index e7f79d2eca9b09ec5a0a8065a7f6917a14a22f59..7d238430aa865302fcd29d26bbb5e61f22200db8 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -21,6 +21,10 @@ import java.nio.channels.ScatteringByteChannel;
  import java.nio.charset.Charset;
  import java.util.UUID;
- import custom.spigot.CustomTranslateItem;
+ import colosseum.spigot.CustomTranslateItem;
 +// PandaSpigot start
 +import io.netty.util.ByteProcessor;
 +import java.nio.channels.FileChannel;
@@ -65,263 +65,263 @@ index 114d179e8204fa4de41e056313b1430bfee3df88..8cac4a4e6dbe01265b6edde07320acda
      public boolean release(int i) {
          return this.a.release(i);
      }
-+    
++
 +    // PandaSpigot start - Delegate new Netty 4.1 methods.
 +    @Override
 +    public boolean isReadOnly() {
 +        return a.isReadOnly();
 +    }
-+    
++
 +    @Override
 +    public ByteBuf asReadOnly() {
 +        return a.asReadOnly();
 +    }
-+    
++
 +    @Override
 +    public int maxFastWritableBytes() {
 +        return a.maxFastWritableBytes();
 +    }
-+    
++
 +    @Override
 +    public short getShortLE(int index) {
 +        return a.getShortLE(index);
 +    }
-+    
++
 +    @Override
 +    public int getUnsignedShortLE(int index) {
 +        return a.getUnsignedShortLE(index);
 +    }
-+    
++
 +    @Override
 +    public int getMediumLE(int index) {
 +        return a.getMediumLE(index);
 +    }
-+    
++
 +    @Override
 +    public int getUnsignedMediumLE(int index) {
 +        return a.getUnsignedMediumLE(index);
 +    }
-+    
++
 +    @Override
 +    public int getIntLE(int index) {
 +        return a.getIntLE(index);
 +    }
-+    
++
 +    @Override
 +    public long getUnsignedIntLE(int index) {
 +        return a.getUnsignedIntLE(index);
 +    }
-+    
++
 +    @Override
 +    public long getLongLE(int index) {
 +        return a.getLongLE(index);
 +    }
-+    
++
 +    @Override
 +    public float getFloatLE(int index) {
 +        return a.getFloatLE(index);
 +    }
-+    
++
 +    @Override
 +    public double getDoubleLE(int index) {
 +        return a.getDoubleLE(index);
 +    }
-+    
++
 +    @Override
 +    public int getBytes(int index, FileChannel out, long position, int length) throws IOException {
 +        return a.getBytes(index, out, position, length);
 +    }
-+    
++
 +    @Override
 +    public CharSequence getCharSequence(int index, int length, Charset charset) {
 +        return a.getCharSequence(index, length, charset);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf setShortLE(int index, int value) {
 +        return a.setShortLE(index, value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf setMediumLE(int index, int value) {
 +        return a.setMediumLE(index, value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf setIntLE(int index, int value) {
 +        return a.setIntLE(index, value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf setLongLE(int index, long value) {
 +        return a.setLongLE(index, value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf setFloatLE(int index, float value) {
 +        return a.setFloatLE(index, value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf setDoubleLE(int index, double value) {
 +        return a.setDoubleLE(index, value);
 +    }
-+    
++
 +    @Override
 +    public int setBytes(int index, FileChannel in, long position, int length) throws IOException {
 +        return a.setBytes(index, in, position, length);
 +    }
-+    
++
 +    @Override
 +    public int setCharSequence(int index, CharSequence sequence, Charset charset) {
 +        return a.setCharSequence(index, sequence, charset);
 +    }
-+    
++
 +    @Override
 +    public short readShortLE() {
 +        return a.readShortLE();
 +    }
-+    
++
 +    @Override
 +    public int readUnsignedShortLE() {
 +        return a.readUnsignedShortLE();
 +    }
-+    
++
 +    @Override
 +    public int readMediumLE() {
 +        return a.readMediumLE();
 +    }
-+    
++
 +    @Override
 +    public int readUnsignedMediumLE() {
 +        return a.readUnsignedMediumLE();
 +    }
-+    
++
 +    @Override
 +    public int readIntLE() {
 +        return a.readIntLE();
 +    }
-+    
++
 +    @Override
 +    public long readUnsignedIntLE() {
 +        return a.readUnsignedIntLE();
 +    }
-+    
++
 +    @Override
 +    public long readLongLE() {
 +        return a.readLongLE();
 +    }
-+    
++
 +    @Override
 +    public float readFloatLE() {
 +        return a.readFloatLE();
 +    }
-+    
++
 +    @Override
 +    public double readDoubleLE() {
 +        return a.readDoubleLE();
 +    }
-+    
++
 +    @Override
 +    public ByteBuf readRetainedSlice(int length) {
 +        return a.readRetainedSlice(length);
 +    }
-+    
++
 +    @Override
 +    public CharSequence readCharSequence(int length, Charset charset) {
 +        return a.readCharSequence(length, charset);
 +    }
-+    
++
 +    @Override
 +    public int readBytes(FileChannel out, long position, int length) throws IOException {
 +        return a.readBytes(out, position, length);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf writeShortLE(int value) {
 +        return a.writeShortLE(value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf writeMediumLE(int value) {
 +        return a.writeMediumLE(value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf writeIntLE(int value) {
 +        return a.writeIntLE(value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf writeLongLE(long value) {
 +        return a.writeLongLE(value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf writeFloatLE(float value) {
 +        return a.writeFloatLE(value);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf writeDoubleLE(double value) {
 +        return a.writeDoubleLE(value);
 +    }
-+    
++
 +    @Override
 +    public int writeBytes(FileChannel in, long position, int length) throws IOException {
 +        return a.writeBytes(in, position, length);
 +    }
-+    
++
 +    @Override
 +    public int writeCharSequence(CharSequence sequence, Charset charset) {
 +        return a.writeCharSequence(sequence, charset);
 +    }
-+    
++
 +    @Override
 +    public int forEachByte(ByteProcessor processor) {
 +        return a.forEachByte(processor);
 +    }
-+    
++
 +    @Override
 +    public int forEachByte(int index, int length, ByteProcessor processor) {
 +        return a.forEachByte(index, length, processor);
 +    }
-+    
++
 +    @Override
 +    public int forEachByteDesc(ByteProcessor processor) {
 +        return a.forEachByteDesc(processor);
 +    }
-+    
++
 +    @Override
 +    public int forEachByteDesc(int index, int length, ByteProcessor processor) {
 +        return a.forEachByteDesc(index, length, processor);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf retainedSlice() {
 +        return a.retainedSlice();
 +    }
-+    
++
 +    @Override
 +    public ByteBuf retainedSlice(int index, int length) {
 +        return a.retainedSlice(index, length);
 +    }
-+    
++
 +    @Override
 +    public ByteBuf retainedDuplicate() {
 +        return a.retainedDuplicate();
 +    }
-+    
++
 +    @Override
 +    public boolean isContiguous() {
 +        return a.isContiguous();
 +    }
-+    
++
 +    @Override
 +    public ByteBuf touch() {
 +        return a.touch();
 +    }
-+    
++
 +    @Override
 +    public ByteBuf touch(Object hint) {
 +        return a.touch(hint);
