@@ -5,10 +5,10 @@ Subject: [PATCH] Fix GH-244: Hit Registration Bug
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index e21ce6f8434a7eba8d1137f46e35493b4863736d..303d145fedb3488df4686f83a63c04c0c24eacc9 100644
+index 37eef30bfb2c9692f21d156548681b5a50c1bdc1..7415c939aac201372d408d78bd15d256c3ad7aa7 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1344,7 +1344,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+@@ -1367,7 +1367,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
              boolean flag = this.player.hasLineOfSight(entity);
              double d0 = 36.0D;
  

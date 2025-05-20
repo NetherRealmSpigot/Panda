@@ -28,10 +28,10 @@ index b5f16e8cab9e43ad7597b2ea5bc921399b37872b..bde014f003bccca916dbc74fc27436bf
      public KnockbackConfig knockback;
      
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4b6582ad3a2f1dc3e6a62f8b501e24c8cb0417b2..ea7c62ba0fec3a61ee5fbeaf3f8918672595ae0b 100644
+index 3ab76da227ec893391993a1e546382c72e6ec301..2e0f7227e9491b4997a16b7d51a1ebd5e58569a1 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -70,6 +70,13 @@ import custom.spigot.PacketProcessor;
+@@ -70,6 +70,13 @@ import colosseum.spigot.PacketProcessor;
  public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerListBox {
  
      private static final Logger c = LogManager.getLogger();

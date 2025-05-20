@@ -7,10 +7,10 @@ Subject: [PATCH] Fix GH-276: Item durability desync when some events are
 Co-authored-by: Rejomy <iyaargg@gmail.com>
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 524ff60ada7392ec1fd803661f957c19c50b2c2e..5201f4055003df9601eeb87a1e9109a7626c7768 100644
+index 05dce2a2c6d7e0a6d3ad86be5d12ec74f34d2bd4..4f90b0f32750f6fb95cbe478655bb6041b1ecff6 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1103,6 +1103,17 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1111,6 +1111,17 @@ public abstract class EntityHuman extends EntityLiving {
                      } else if (flag1) {
                          entity.extinguish();
                      }
